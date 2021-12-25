@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">La Mezquita de Lleida</string>
+    <string name="next">Siguiente</string>
+    <string name="prev">Previo</string>
+    <string name="fajr">Fajr:</string>
+    <string name="dohr">Dohr:</string>
+    <string name="asr">Asr:</string>
+    <string name="isha">Isha:</string>
+    <string name="maghreb">Maghreb:</string>
+    <string name="loading">Cargando...</string>
+    <string name="last_jumua">Último jummah</string>
+    <string name="last_month">El mes pasado</string>
+    <string name="total">Total</string>
+    <string name="home">Hogar</string>
+    <string name="salat">Salat</string>
+    <string name="news">Noticias</string>
+    <string name="masjidna_shared_pref" translatable="false">masjidna</string>
+    <string name="Isha">Isha</string>
+    <string name="Maghrib">Maghrib</string>
+    <string name="Asr">Asr</string>
+    <string name="Dhuhr">Dhuhr</string>
+    <string name="Fajr">Fajr</string>
+    <string name="prayerNotif">"Quedan 10 minutos para "</string>
+    <string name="prayerNotifar">ss</string>
+
+</resources>

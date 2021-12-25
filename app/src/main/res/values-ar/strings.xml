@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">La Mezquita de Lleida</string>
+    <string name="next">التالي</string>
+    <string name="prev">السابق</string>
+    <string name="fajr">الفجر:</string>
+    <string name="dohr">الظهر:</string>
+    <string name="asr">العصر:</string>
+    <string name="isha">العشاء:</string>
+    <string name="maghreb">المغرب:</string>
+    <string name="loading">تحميل...</string>
+    <string name="last_jumua">الجمعة السابقة</string>
+    <string name="last_month">الشهر السابق</string>
+    <string name="total">المجموع</string>
+    <string name="home">الرئيسية</string>
+    <string name="salat">الصلاة</string>
+    <string name="news">الجديد</string>
+    <string name="Isha">العشاء</string>
+    <string name="Maghrib">المغرب</string>
+    <string name="Asr">العصر</string>
+    <string name="Dhuhr">الظهر</string>
+    <string name="Fajr">الفجر</string>
+    <string name="prayerNotif">" تبقى 10 دقائق لصلاة "</string>
+</resources>

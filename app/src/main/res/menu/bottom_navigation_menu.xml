@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/salat_mi"
+        android:icon="@drawable/bottombar_color"
+        android:iconTint="@color/secondary"
+        android:title="@string/salat" />
+    <item
+        android:id="@+id/home_mi"
+        android:icon="@drawable/ic_mosque_svgrepo_com"
+        android:iconTint="@color/secondary"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/notifications_mi"
+        android:icon="@drawable/ic_baseline_notifications_active_24"
+        android:iconTint="@color/secondary"
+        android:title="@string/news" />
+</menu>

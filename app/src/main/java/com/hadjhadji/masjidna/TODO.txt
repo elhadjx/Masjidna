@@ -1,0 +1,5 @@
+//TODO LIST
+1- fix arabic date in API request //DONE
+2- fix language changing  //DONE
+3- fix bottom icon's selected color //Couldn't be done
+4- make notification //
