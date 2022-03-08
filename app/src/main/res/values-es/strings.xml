@@ -21,4 +21,6 @@
     <string name="Dhuhr">Dhuhr</string>
     <string name="Fajr">Fajr</string>
     <string name="prayerNotif">"Quedan 10 minutos para "</string>
+    <string name="prayerNotifar">"Ahora es el momento de la oración de "</string>
+    <string name="close">Salir</string>
 </resources>

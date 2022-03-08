@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.hadjhadji.masjidna">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:showWhenLocked="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Masjidna">
+        android:theme="@style/Theme.Masjidna"
+        tools:targetApi="o_mr1">
+        <receiver
+            android:name=".BroadcastR.MyReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <service
+            android:name=".services.AudioAdhan"
+            android:exported="false" />
+
+        <activity
+            android:name=".NotifActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -18,16 +37,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".BroadcastR.MyBroadcastReceiver" />
+
         <service
             android:name=".services.PushNotificationFirebase"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service
             android:name=".services.NotifierService"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

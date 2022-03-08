@@ -21,4 +21,6 @@
     <string name="Dhuhr">الظهر</string>
     <string name="Fajr">الفجر</string>
     <string name="prayerNotif">" تبقى 10 دقائق لصلاة "</string>
+    <string name="prayerNotifar">"حان الآن موعد صلاة "</string>
+    <string name="close">خروج</string>
 </resources>

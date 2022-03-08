@@ -1,9 +1,13 @@
 package com.hadjhadji.masjidna.fragments;
 
+import static androidx.legacy.content.WakefulBroadcastReceiver.startWakefulService;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hadjhadji.masjidna.MainActivity;
 import com.hadjhadji.masjidna.R;
+import com.hadjhadji.masjidna.services.NotifierService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,9 +55,9 @@ public class Salat extends Fragment {
     Button btn_previousDay, btn_nextDay;
     String currentDate;
     SharedPreferences sharedPref;
-
     public static boolean gotDate;
     public static Calendar c;
+
     public Salat() {
         // Required empty public constructor
     }
@@ -183,8 +188,14 @@ public class Salat extends Fragment {
                     editor.apply();
                 } catch (Exception e){
                     e.printStackTrace();
-                    ReportToFirebase(e.getMessage());
+                    ReportToFirebase("SharedPref in Salat", e.getMessage());
                 }
+                Context context = getContext();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(new Intent(context, NotifierService.class));
+                }
+                context.startService(new Intent(context, NotifierService.class));
+                startWakefulService(context, new Intent(context, NotifierService.class));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -246,9 +257,23 @@ public class Salat extends Fragment {
             e.printStackTrace();
         }
     }
-    private static void ReportToFirebase(String message){
+    public static void ReportToFirebase(String title, String message){
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://masjidna-8e74b-default-rtdb.europe-west1.firebasedatabase.app");
-        DatabaseReference report_ref = database.getReference("reports");
-        report_ref.child(System.currentTimeMillis()+"").setValue(message);
+        DatabaseReference report_ref = database.getReference("reports").child(title).child(timestampToHHmm(System.currentTimeMillis()+3600000));
+        report_ref.setValue(message);
+    }
+    public static String timestampToHHmm(long timestampInMillis){
+        timestampInMillis = (timestampInMillis/1000)/60; // to minutes
+        //timestampInMillis += 60;
+        int minutes = (int) (timestampInMillis % 60);
+        int hours = (int) ((timestampInMillis / 60) % 24);
+        String str_minutes = minutes + "";
+        String str_hours = hours + "";
+        if (minutes < 10)
+            str_minutes = "0" + minutes;
+        if (hours < 10)
+            str_hours = "0"+hours;
+        return str_hours+":"+str_minutes;
+
     }
 }

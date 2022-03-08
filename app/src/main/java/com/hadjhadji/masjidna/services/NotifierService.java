@@ -1,9 +1,13 @@
 package com.hadjhadji.masjidna.services;
 
+import static com.hadjhadji.masjidna.NotifActivity.FULL_SCREEN_ACTION;
+
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,9 +26,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hadjhadji.masjidna.MainActivity;
+import com.hadjhadji.masjidna.BroadcastR.MyBroadcastReceiver;
+import com.hadjhadji.masjidna.BroadcastR.MyReceiver;
 import com.hadjhadji.masjidna.R;
-import com.hadjhadji.masjidna.models.Notification;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,165 +42,163 @@ public class NotifierService extends IntentService  {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        System.out.println("i'm running hahaha");
-        Log.e("hehehe","heheheheheh");
-        CountDownTimer countDownTimer = new CountDownTimer(60000,1000) {
-            @Override
-            public void onTick(long l) {
-                Log.e("1onTick",""+ l);
-            }
 
-            @Override
-            public void onFinish() {
-                Log.e("1onFinish","finished");
-
-            }
-        };
-        countDownTimer.start();
     }
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        new Thread(){
 
-            @Override
-            public void run() {
-                super.run();
-                while(true){
-                    try {
+        try {
 
-                        Thread.sleep(10000);// 60 seconds
+            //getting last news timestamp from shared prefs
+            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.masjidna_shared_pref),Context.MODE_PRIVATE);
 
-                        //getting last news timestamp from shared prefs
-                        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.masjidna_shared_pref),Context.MODE_PRIVATE);
-
-                        final long[] lastNewsTimestamp = {sharedPref.getLong("lastNewsTimestamp", 0)};
-
-                        /*SharedPreferences.Editor editor = sharedPref.edit();
-                        for (int i = 0; i < 5; i++) {
-                            editor.putBoolean("notified"+i,false);
-                        }
-                        editor.apply();*/
+            final long[] lastNewsTimestamp = {sharedPref.getLong("lastNewsTimestamp", 0)};
 
 
-                        // get last news timestamp from firebase
-                        // & check with last news timestamp on shared prefs
-                        // & maybe notify
 
+            // Check for news from Firebase & notify
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://masjidna-8e74b-default-rtdb.europe-west1.firebasedatabase.app");
+            DatabaseReference notif_ref = database.getReference("Notifications").child("Last");
+            notif_ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    long updatedLastNewsTimestamp = Long.parseLong(""+snapshot.child("timestamp").getValue());
 
-                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://masjidna-8e74b-default-rtdb.europe-west1.firebasedatabase.app");
-                        DatabaseReference notif_ref = database.getReference("Notifications").child("Last");
-                        notif_ref.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                long updatedLastNewsTimestamp = Long.parseLong(""+snapshot.child("timestamp").getValue());
+                    if (updatedLastNewsTimestamp > lastNewsTimestamp[0]) {
 
-                                if (updatedLastNewsTimestamp > lastNewsTimestamp[0]) {
-
-                                    //update the shared prefs
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putLong("lastNewsTimestamp", updatedLastNewsTimestamp);
-                                    editor.apply();
-                                    lastNewsTimestamp[0] = updatedLastNewsTimestamp;
-                                    //notify new news message
-                                    String notif_msg = String.valueOf(snapshot.child("message").getValue());
-                                    if (notif_msg.length()>30){
-                                        notif_msg = notif_msg.substring(0,27) + "...";
-                                    }
-                                    createNotification(""+snapshot.child("title").getValue(),notif_msg);
-
-                                }
-
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        //checking time if it's closer to Salat (10 minutes) to notify
-
-                        ArrayList<Long> prayerTimes = new ArrayList<>(Arrays.asList(
-                                Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("fajr","0"))),
-                                Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("dohr","0"))),
-                                Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("asr","0"))),
-                                Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("maghreb","0"))),
-                                Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("isha","0")))
-                        ));
-                        long currentTime = System.currentTimeMillis() / 1000;
-
-                        for (int i = 0; i < prayerTimes.size(); i++) {
-                            Log.e("prayer",i+" " + prayerTimes.get(i) + "\t " + currentTime);
-                            String salatName = "";
-                            String language = sharedPref.getString("salatLang","es");
-                            switch (i){
-                                case 0:
-                                    salatName = getString(R.string.Fajr);
-                                    if (language.equals("ar")) salatName="الفجر";
-                                    break;
-                                case 1:
-                                    salatName = getString(R.string.Dhuhr);
-                                    if (language.equals("ar")) salatName="الظهر";
-                                    break;
-                                case 2:
-                                    salatName = getString(R.string.Asr);
-                                    if (language.equals("ar")) salatName="العصر";
-                                    break;
-                                case 3:
-                                    salatName = getString(R.string.Maghrib);
-                                    if (language.equals("ar")) salatName="المغرب";
-                                    break;
-                                case 4:
-                                    salatName = getString(R.string.Isha);
-                                    if (language.equals("ar")) salatName="العشاء";
-                                    break;
-                            }
-                            if (currentTime  < prayerTimes.get(i)){
-
-                                Log.e("prayer2","chosen prayer " + salatName);
-
-                                if (currentTime > (prayerTimes.get(i) - 630000)){
-                                    Log.e("notification",""+sharedPref.getBoolean("notified"+i,false));
-                                    if(sharedPref.getString("salatLang","es").equals("ar")){
-                                        createNotification(salatName,salatName + " تبقى دقائق لصلاة ");
-                                    }else{
-                                        createNotification(salatName,salatName + " تبقى دقائق لصلاة ");
-                                        //createNotification(salatName,"Quedan minutos para " + salatName);
-                                    }
-                                    /*if (!(sharedPref.getBoolean("notified"+i,false))){
-                                        if(sharedPref.getString("salatLang","es").equals("ar")){
-                                            createNotification(salatName,salatName + " تبقى دقائق لصلاة ");
-                                        }else{
-                                            createNotification(salatName,salatName + " تبقى دقائق لصلاة ");
-                                            //createNotification(salatName,"Quedan minutos para " + salatName);
-                                        }
-                                        sharedPref.edit().putBoolean("notified"+i,true).apply();
-                                        if (i==4) {
-                                            sharedPref.edit().putBoolean("notified0",false).apply();
-                                        } else {
-                                            sharedPref.edit().putBoolean("notified"+(i+1),false).apply();
-                                        }
-                                    }*/
-                                }
-                                break;
-                            } else Log.e("prayerN","not for "+ salatName);
+                        //update the shared prefs
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putLong("lastNewsTimestamp", updatedLastNewsTimestamp);
+                        editor.apply();
+                        lastNewsTimestamp[0] = updatedLastNewsTimestamp;
+                        //notify new news message
+                        String notif_msg = String.valueOf(snapshot.child("message").getValue());
+                        if (notif_msg.length()>30){
+                            notif_msg = notif_msg.substring(0,27) + "...";
+                            RingtoneManager.getRingtone(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)).play();
+                            createSimpleNotification(""+snapshot.child("title").getValue(),notif_msg, getApplicationContext());
                         }
 
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        ReportToFirebase(e.getMessage());
                     }
-                }
-            }
-        }.start();
 
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+            //checking time for salat
+
+            ArrayList<Long> prayerTimes = new ArrayList<>(Arrays.asList(
+                    Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("fajr","0"))),
+                    Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("dohr","0"))),
+                    Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("asr","0"))),
+                    Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("maghreb","0"))),
+                    Long.parseLong(todaysFtoTimestamp(""+sharedPref.getString("isha","0")))
+            ));
+            long currentTime = (System.currentTimeMillis() / 60000)*60 + 3600;
+
+            for (int i = 0; i < prayerTimes.size(); i++) {
+                Log.e("NotifierService",i+" " + prayerTimes.get(i)
+                        + "(" +timestampToHHmm(prayerTimes.get(i)*1000) + ")\t "
+                        + currentTime + "(" + timestampToHHmm(currentTime*1000) + ")");
+                String salatName = "";
+                String language = sharedPref.getString("salatLang","es");
+                switch (i){
+                    case 0:
+                        salatName = getString(R.string.Fajr);
+                        if (language.equals("ar")) salatName="الفجر";
+                        break;
+                    case 1:
+                        salatName = getString(R.string.Dhuhr);
+                        if (language.equals("ar")) salatName="الظهر";
+                        break;
+                    case 2:
+                        salatName = getString(R.string.Asr);
+                        if (language.equals("ar")) salatName="العصر";
+                        break;
+                    case 3:
+                        salatName = getString(R.string.Maghrib);
+                        if (language.equals("ar")) salatName="المغرب";
+                        break;
+                    case 4:
+                        salatName = getString(R.string.Isha);
+                        if (language.equals("ar")) salatName="العشاء";
+                        break;
+                }
+                if (currentTime  < prayerTimes.get(i)){
+
+                    Log.e("NotifierService","chosen prayer " + salatName);
+                    if (currentTime < (prayerTimes.get(i) - 600)){
+                        setAlarm(getApplicationContext(),(prayerTimes.get(i) - 600), false, salatName); // 10 minutes before Adhan Time
+                    } else {
+                        setAlarm(getApplicationContext(),prayerTimes.get(i),true, salatName); // Adhan Time
+                    }
+
+                    break;
+                } else Log.e("prayerN","not for "+ salatName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ReportToFirebase("NotifierService/Exception",e.getMessage());
+        }
 
 
         return START_NOT_STICKY;
-        //return super.onStartCommand(intent, flags, startId);
+    }
+    public void createSimpleNotification(String title, String message, Context context){
+        createNotificationChannel();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "MasjidnaChannel")
+                .setSmallIcon(R.drawable.ic_mosque_svgrepo_com)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setVibrate(new long[]{1000, 2000, 4000, 4000})
+                .setPriority(NotificationCompat.PRIORITY_MAX);
+
+        RingtoneManager.getRingtone(context, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)).play();
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+        notificationManagerCompat.notify(100,builder.build());
+    }
+    public void setAlarm(Context context, long timeInS, Boolean isAdhan, String salatName){
+        timeInS -= 3600; // timezone -1 hour gmt+1
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Intent updateServiceIntent = new Intent(context, MyBroadcastReceiver.class);
+        PendingIntent pendingUpdateIntent = PendingIntent.getService(context, 0, updateServiceIntent, 0);
+
+        // Cancel alarms
+        try {
+            alarmManager.cancel(pendingUpdateIntent);
+        } catch (Exception e) {
+            Log.e("NotifierService", "AlarmManager update was not canceled. " + e.toString());
+        }
+        try {
+            Intent intent;
+            if (isAdhan){
+                intent = new Intent(FULL_SCREEN_ACTION, null,this, MyBroadcastReceiver.class);
+            } else {
+                intent = new Intent(this,MyBroadcastReceiver.class);
+            }
+            intent.putExtra("isAdhan", isAdhan);
+            intent.putExtra("salatName",salatName);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    this.getApplicationContext(), 234324243, intent, 0);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInS * 1000, pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInS * 1000, pendingIntent);
+            }
+            ReportToFirebase("NotifierService", "ASF: " + isAdhan + " " +timestampToHHmm((timeInS+3600)*1000));
+
+        } catch (Exception e){
+            ReportToFirebase("NotifierService",e.getMessage());
+        }
     }
     public void createNotification(String title, String message){
         createNotificationChannel();
@@ -243,14 +246,28 @@ public class NotifierService extends IntentService  {
             r = String.valueOf((minutes + (hours * 60)) * 60);
         } catch (Exception e){
             r = "0";
-            ReportToFirebase(e.getMessage());
         }
 
         return r ;
     }
-    private static void ReportToFirebase(String message){
+    public static void ReportToFirebase(String title, String message){
+        Log.e("NotifierService",title + ": " + message);
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://masjidna-8e74b-default-rtdb.europe-west1.firebasedatabase.app");
-        DatabaseReference report_ref = database.getReference("reports").child((System.currentTimeMillis()/1000)+"");
+        DatabaseReference report_ref = database.getReference("reports").child(title).child(timestampToHHmm(System.currentTimeMillis()+3600000));
         report_ref.setValue(message);
+    }
+    public static String timestampToHHmm(long timestampInMillis){
+        timestampInMillis = (timestampInMillis/1000)/60; // to minutes
+        //timestampInMillis += 60;
+        int minutes = (int) (timestampInMillis % 60);
+        int hours = (int) ((timestampInMillis / 60) % 24);
+        String str_minutes = minutes + "";
+        String str_hours = hours + "";
+        if (minutes < 10)
+            str_minutes = "0" + minutes;
+        if (hours < 10)
+            str_hours = "0"+hours;
+        return str_hours+":"+str_minutes;
+
     }
 }
