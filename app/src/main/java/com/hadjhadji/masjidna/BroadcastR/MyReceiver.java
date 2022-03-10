@@ -60,6 +60,20 @@ public class MyReceiver extends BroadcastReceiver {
         private Task(PendingResult pendingResult, Intent intent) {
             this.pendingResult = pendingResult;
             this.intent = intent;
+
+            redo(scontext,intent);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                scontext.startForegroundService(new Intent(scontext, NotifierService.class));
+            }
+            scontext.startService(new Intent(scontext, NotifierService.class));
+            startWakefulService(scontext, new Intent(scontext, NotifierService.class));
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("Action: " + intent.getAction() + "\n");
+            sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
+            String log = sb.toString();
+            Log.d("MyReceiver", log);
         }
 
         @Override
@@ -106,12 +120,14 @@ public class MyReceiver extends BroadcastReceiver {
 
             ReportToFirebase("MyReceiver","I checked: " + timestampToHHmm(System.currentTimeMillis()) );
             */
+
+            redo(scontext,intent);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 scontext.startForegroundService(new Intent(scontext, NotifierService.class));
             }
             scontext.startService(new Intent(scontext, NotifierService.class));
             startWakefulService(scontext, new Intent(scontext, NotifierService.class));
-
             StringBuilder sb = new StringBuilder();
             sb.append("Action: " + intent.getAction() + "\n");
             sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");

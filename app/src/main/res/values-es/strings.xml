@@ -23,4 +23,5 @@
     <string name="prayerNotif">"Quedan 10 minutos para "</string>
     <string name="prayerNotifar">"Ahora es el momento de la oración de "</string>
     <string name="close">Salir</string>
+    <string name="this_month">Este mes</string>
 </resources>

@@ -23,4 +23,5 @@
     <string name="prayerNotif">" تبقى 10 دقائق لصلاة "</string>
     <string name="prayerNotifar">"حان الآن موعد صلاة "</string>
     <string name="close">خروج</string>
+    <string name="this_month">هذا الشهر</string>
 </resources>

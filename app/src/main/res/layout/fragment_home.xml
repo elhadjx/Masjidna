@@ -28,33 +28,71 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/round_corner_bg"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/monthly"
+        app:layout_constraintBottom_toTopOf="@+id/lastmonth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="@string/last_jumua"
             android:textColor="@color/secondary"
             android:textSize="22sp" />
 
         <TextView
+            android:id="@+id/lastJ_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:gravity="end"
             android:text="€1200"
             android:textColor="@color/secondary"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/monthly"
+        android:id="@+id/lastmonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_corner_bg"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/thismonth"
+        app:layout_constraintEnd_toEndOf="@+id/lastJLL"
+        app:layout_constraintStart_toStartOf="@+id/lastJLL">
+
+        <TextView
+            android:id="@+id/textView45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="@string/last_month"
+            android:textColor="@color/secondary"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/lastmonth_amount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="€1200"
+            android:textColor="@color/secondary"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/thismonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -70,29 +108,30 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/last_month"
+            android:text="@string/this_month"
             android:textColor="@color/secondary"
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/thismonth_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:gravity="end"
             android:text="€1200"
             android:textColor="@color/secondary"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="80dp"
         android:layout_weight="1"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
@@ -106,22 +145,23 @@
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="@string/total"
             android:textColor="@color/secondary"
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/total_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:gravity="end"
             android:text="€12000"
             android:textColor="@color/secondary"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
 

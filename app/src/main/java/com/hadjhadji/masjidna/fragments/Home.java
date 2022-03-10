@@ -24,9 +24,10 @@ import com.hadjhadji.masjidna.R;
 import java.util.Locale;
 
 public class Home extends Fragment {
-    TextView tv_amount;
+    TextView totalAmount_tv, lastMonthAmount_tv, thisMonthAmount_tv, lastJumAmount_tv;
     ImageView languageIV;
     String language;
+    String euro = "€";
 
 
     public Home() {
@@ -56,7 +57,13 @@ public class Home extends Fragment {
         //Read from SharedPref
         language = sharedPref.getString("salatLang","en");
         updateResources(getContext(),language);
+
+        totalAmount_tv = view.findViewById(R.id.total_amount_tv);
+        lastMonthAmount_tv = view.findViewById(R.id.lastmonth_amount_tv);
+        thisMonthAmount_tv = view.findViewById(R.id.thismonth_amount_tv);
+        lastJumAmount_tv = view.findViewById(R.id.lastJ_amount_tv);
         languageIV = view.findViewById(R.id.languageIV);
+
         if (language.equals("ar")){
             languageIV.setImageResource(R.drawable.spain);
         } else {
@@ -89,13 +96,15 @@ public class Home extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://masjidna-8e74b-default-rtdb.europe-west1.firebasedatabase.app");
 
 
-        DatabaseReference last_jummah = database.getReference("Jummuas").child("last");
+        DatabaseReference sadaka_ref = database.getReference("Jummuas").child("general");
 
-
-        last_jummah.addValueEventListener(new ValueEventListener() {
+        sadaka_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //tv_amount.setText("€"+snapshot.getValue().toString());
+                totalAmount_tv.setText(euro + snapshot.child("total").getValue());
+                lastMonthAmount_tv.setText(euro + snapshot.child("last_month").getValue());
+                thisMonthAmount_tv.setText(euro + snapshot.child("this_month").getValue());
+                lastJumAmount_tv.setText(euro + snapshot.child("last_jum").getValue());
             }
 
             @Override

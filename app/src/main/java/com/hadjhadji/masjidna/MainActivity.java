@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
             AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             long l = ((new Date().getTime())/60000)*60000;
             if (l < new Date().getTime()) {
-                l += 3600000; // start at next minute
+                l += 600000; // start at next minute
             }
-            am.setRepeating(AlarmManager.RTC_WAKEUP, l, 3600000, sender);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, l, 600000, sender);
         } catch (Exception e){
             e.printStackTrace();
         }

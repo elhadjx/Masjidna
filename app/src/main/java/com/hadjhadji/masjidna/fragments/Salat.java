@@ -109,7 +109,7 @@ public class Salat extends Fragment {
                         public void run() {
                             updateResources(getContext(),"en");
                             timenow_tv.setText(
-                                    new SimpleDateFormat("hh:mm:ss", Locale.getDefault()).format(new Date())
+                                    new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date())
                             );
                             updateResources(getContext(),sharedPref.getString("salatLang","es"));
                         }
