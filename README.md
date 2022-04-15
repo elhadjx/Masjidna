@@ -18,7 +18,8 @@ This app has a simple admin app that sets custom prayer times and inserts the re
 # What does this app do?
 It is an open source Android application that allows Muslims to keep track of prayer times of their preferred masjid. They also can keep track of Sadaka that they donate to the masjid every Jumua. Finally they can get notifications and messages about any news or important information they should know, The App has a simple admin app that sets custom prayer times and inserts the rest of the data needed by this app.
 
-
+# Admin App
+https://github.com/dinoelhadj/AdminMasjidna/
 
 # Libraries this app uses:
 
