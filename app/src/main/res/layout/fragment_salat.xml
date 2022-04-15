@@ -190,7 +190,7 @@
             android:layout_weight="1"
             android:text="@string/next"
             android:textColor="@color/secondary"
-            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
             />
 
         <Button
@@ -202,7 +202,7 @@
             android:layout_weight="1"
             android:text="@string/prev"
             android:textColor="@color/secondary"
-            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

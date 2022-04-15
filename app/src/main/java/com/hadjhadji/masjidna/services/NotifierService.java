@@ -254,7 +254,7 @@ public class NotifierService extends IntentService  {
         Log.e("NotifierService",title + ": " + message);
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://masjidna-8e74b-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference report_ref = database.getReference("reports").child(title).child(timestampToHHmm(System.currentTimeMillis()+3600000));
-        report_ref.setValue(message);
+        //report_ref.setValue(message);
     }
     public static String timestampToHHmm(long timestampInMillis){
         timestampInMillis = (timestampInMillis/1000)/60; // to minutes
