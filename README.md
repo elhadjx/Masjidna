@@ -5,8 +5,9 @@
 
 
 
-Masjidna is an Android App for any masjid where you can see and get prayer times and adhan notifications, the donated amount by the prayers to that specefic masjid over time and lastly get news or messages about anything important to know from the masjid, It is both available in Arabic and Spanish.
+Masjidna is an Android App for a predefined custom masjid where you can see and get prayer times and adhan notifications, the donated amount by the prayers to that specific masjid over time and lastly get news or messages about anything important to know from the masjid, It is both available in Arabic and Spanish.
 
+This app has a simple admin app that sets custom prayer times and inserts the rest of the data needed by this app.
 
 # Screenshots
 <img src="Screenshots/Screenshot (1).jpg" alt="phone image" width="200px" />
