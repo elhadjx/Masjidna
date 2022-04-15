@@ -1,0 +1,119 @@
+{
+  "Jummuas": {
+    "general": {
+      "last_jum": 50,
+      "last_month": 50,
+      "this_month": 100,
+      "total": 150
+    },
+    "history": {
+      "01-03-2022": 0,
+      "02-03-2022": 0,
+      "11-03-2022": 0,
+      "14-03-2022": 50,
+      "15-04-2022": 100
+    }
+  },
+  "Notifications": {
+    "Last": {
+      "id": "FlBiEwPEuvuZpyf",
+      "message": "some random information",
+      "timestamp": 1650029654140,
+      "title": "Title test"
+    },
+    "history": {
+      "1646895461245": {
+        "id": "vqeYU6WvSRNFloA",
+        "message": "kiiiiiw",
+        "title": "kiw"
+      },
+      "1646897163103": {
+        "id": "JfHkLgjwjxtOwvX",
+        "message": "this is a simple message",
+        "title": "Title"
+      },
+      "1646947061606": {
+        "id": "YKuIBkrCk4DDUP0",
+        "message": "السلام عليكم \n،",
+        "title": "الأوراق المطلوبة لتسجيل الأطفال"
+      },
+      "1646947075497": {
+        "id": "xAY5oo5MorqfBX4",
+        "message": "السلام عليكم ",
+        "title": "الأوراق المطلوبة لتسجيل الأطفال"
+      },
+      "1646947973127": {
+        "id": "gKs3EQ21K7ea6cV"
+      },
+      "1646947973128": {
+        "message": "os explico : ",
+        "title": "hola"
+      },
+      "1650029654140": {
+        "id": "FlBiEwPEuvuZpyf",
+        "message": "some random information",
+        "title": "Title test"
+      }
+    }
+  },
+  "Salat": {
+    "07-03-2022": {
+      "asr": "16:57",
+      "dohr": "15:37",
+      "fajr": "05:00",
+      "isha": "19:47",
+      "maghreb": "20:54"
+    },
+    "08-03-2022": {
+      "asr": "17:00",
+      "dohr": "14:25",
+      "fajr": "07:54",
+      "isha": "21:25",
+      "maghreb": "20:00"
+    },
+    "09-03-2022": {
+      "asr": "16:02",
+      "dohr": "08:00",
+      "fajr": "06:10",
+      "isha": "21:29",
+      "maghreb": "20:30"
+    },
+    "10-03-2022": {
+      "asr": "",
+      "dohr": "",
+      "fajr": "",
+      "isha": "22:44",
+      "maghreb": ""
+    },
+    "11-03-2022": {
+      "asr": "16:25",
+      "dohr": "13:08",
+      "fajr": "05:57",
+      "isha": "20:27",
+      "maghreb": "19:00"
+    },
+    "12-03-2022": {
+      "asr": "16:25",
+      "dohr": "13:08",
+      "fajr": "05:55",
+      "isha": "20:27",
+      "maghreb": "19:00"
+    },
+    "15-04-2022": {
+      "asr": "16:00",
+      "dohr": "13:00",
+      "fajr": "05:04",
+      "isha": "20:40",
+      "maghreb": "19:33"
+    }
+  },
+  "reports": {
+    "ClassMonitor": {
+      "14:34": "MainActivity Started",
+      "15:50": "MyBroadCastReceiver/onReceive Started",
+      "16:00": "MainActivity Started",
+      "18:36": "MainActivity Started",
+      "19:05": "MainActivity Started"
+    }
+  }
+}
