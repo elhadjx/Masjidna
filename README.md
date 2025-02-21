@@ -1,6 +1,6 @@
 # Masjidna 
 
-[![Masjid,a](https://i.ibb.co/bzRWk5m/icon.png)](https://github.com/dinoelhadj/Masjidna)
+[![Masjid,a](https://i.ibb.co/bzRWk5m/icon.png)](https://github.com/elhadjx/Masjidna)
 
 
 
@@ -19,7 +19,7 @@ This app has a simple admin app that sets custom prayer times and inserts the re
 It is an open source Android application that allows Muslims to keep track of prayer times of their preferred masjid. They also can keep track of Sadaka that they donate to the masjid every Jumua. Finally they can get notifications and messages about any news or important information they should know, The App has a simple admin app that sets custom prayer times and inserts the rest of the data needed by this app.
 
 # Admin App
-https://github.com/dinoelhadj/AdminMasjidna/
+https://github.com/elhadjx/AdminMasjidna/
 
 # Libraries this app uses:
 
